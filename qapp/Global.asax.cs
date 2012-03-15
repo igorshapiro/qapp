@@ -7,6 +7,7 @@ using System.Web.Routing;
 using Raven.Client;
 using Raven.Abstractions.Data;
 using Raven.Client.Document;
+using qapp.Models;
 
 namespace qapp
 {
@@ -50,6 +51,36 @@ namespace qapp
                 Url = parser.ConnectionStringOptions.Url
             };
             Store.Initialize();
+
+            InitDB();
+        }
+
+        static Random s_random = new Random();
+
+        private void InitDB()
+        {
+            using (var s = Store.OpenSession())
+            {
+                if (s.Query<Merchant>().Any()) return;
+                for (int i = 0; i < 10; i++)
+                {
+                    var queueId =  "queues/" + Guid.NewGuid().ToString();
+                    var merchant = new Merchant
+                    {
+                        Id = "merchants/" + Guid.NewGuid(),
+                        Address = "addr " + Guid.NewGuid(),
+                        Longitude = s_random.NextDouble(),
+                        Latitude = s_random.NextDouble(),
+                        Name = Guid.NewGuid().ToString(),
+                        QueueIds = new[] {queueId}
+                    };
+                    var queue = new Queue { Id = queueId, MerchantId = merchant.Id };
+
+                    s.Store(queue);
+                    s.Store(merchant);
+                }
+                s.SaveChanges();
+            }
         }
     }
 }

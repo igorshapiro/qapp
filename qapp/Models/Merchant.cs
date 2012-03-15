@@ -16,7 +16,7 @@ namespace qapp.Models
 
     public class Merchant
     {
-        public string MerchantId { get; set; }
+        public string Id { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }
         public double Longitude { get; set; }
@@ -35,9 +35,20 @@ namespace qapp.Models
         {
             using (var session = MvcApplication.Store.OpenSession())
             {
+                if (keywords == null || keywords.Length == 0)
+                    return session.Query<Merchant>().ToArray();
                 return session.Query<Merchant>()
                     .Where(m => m.Keywords.Any(k => k.In(keywords)))
                     .ToArray();
+            }
+        }
+
+        public Queue[] GetQueues()
+        {
+            if (QueueIds == null || QueueIds.Length == 0) return new Queue[] { };
+            using (var session = MvcApplication.Store.OpenSession())
+            {
+                return session.Load<Queue>(QueueIds).ToArray();
             }
         }
     }
