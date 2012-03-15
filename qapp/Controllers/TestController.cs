@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Configuration;
+using System.Text;
 
 namespace qapp.Controllers
 {
@@ -16,5 +18,9 @@ namespace qapp.Controllers
             return Json(new{Status = "ok"}, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult DB()
+        {
+            return Content(ConfigurationManager.ConnectionStrings["RavenDB"].ConnectionString, "text/plain", Encoding.UTF8);
+        }
     }
 }
