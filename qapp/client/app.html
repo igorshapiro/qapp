@@ -18,13 +18,14 @@
         
     </head>
     <body>
-        <div data-role="page" id="mainPage">
-            <div data-role="content">
+        <div data-role="page" >
+            <div data-role="content" id="mainPage">
                 <div data-role="fieldcontain">
+                <a href="getticket.html" data-rel="dialog"> dialog</a>
                     <label for="selectCategory">
                         Category:
                     </label>
-                    <select name="selectCategory" id="selectCategory" data-theme="a" onchange="setPlaces()">
+                    <select name="selectCategory" id="selectCategory" data-theme="a" onchange="initPlaces()">
                         <option value="0">
                             Favorites
                         </option>
@@ -33,17 +34,26 @@
                         </option>
                     </select>
                 </div>
+                
                  <ul data-role="listview" id="placesList" data-theme="a">
+                 <li><a onclick="toggleGetTicketScreen('Laka')">ddas</a></li>
             	</ul>
             </div>
             
+            <div id="getticket">
+            <h1>Get ticket</h1>
+            <a id="placeName"></a>
+            <a onclick="gotTicket()">get ticket	</a>
             
+            </div>
             
            
             
             <script type="text/javascript">
       		$(document).ready(function() {
-      			setCategories();
+      		//	setCategories();
+      		$("#getticket").hide();
+      		initCategories();
       		});
       		
       		 

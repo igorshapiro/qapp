@@ -7,7 +7,7 @@ function addCategory(category){
 }
 
 function addPlace(place){
-	$("#placesList").append("<li><a>" + place.name + "</a></li>");
+	$("#placesList").append("<li data-theme='c'><a>" + place.name + "</a></li>");
 	$("#placesList").listview("refresh");
 	
 }
@@ -21,11 +21,12 @@ function initCategories(categories){
 	}
 }
 
-function initPlaces(places){
-	if (places==null){
-		var jsonStr = '[{name: "place1"}, {name: "place2"}, {name: "place3"}]';
-		places = eval('(' + jsonStr + ')');
+function initPlaces(jsonStr){
+	if (jsonStr==null){
+		jsonStr = '[{name: "place1"}, {name: "place2"}, {name: "place3"}]';
 	}
+	
+	places = eval('(' + jsonStr + ')');
 	
 	for (var i in places){
 		addPlace(places[i]);
@@ -42,4 +43,16 @@ function setPlaces(){
 	$.get("http://qapp.apphb.com/merchants", function(data){
     	initPlaces(data);
     	});
+}
+
+function toggleGetTicketScreen(placeName){
+	$("#mainPage").fadeOut();
+	$("#getticket").fadeIn();
+	
+//	alert(placeName);
+	
+}
+
+function gotTicket(){
+	Android.startWebPuller();
 }
