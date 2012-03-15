@@ -21,10 +21,14 @@ namespace qapp.Controllers
         /// <returns></returns>
         public ActionResult Index(double? longitude, double? latitude, string keywords)
         {
-            var matches = from m in Merchant.GetAll(keywords.Split(',')
+            string[] keywordsArray = new string[]{};
+            if (keywords != null)
+                keywordsArray = keywords.Split(',')
                               .Where(k => k != null)
                               .Select(k => k.Trim())
-                              .Where(k => !string.IsNullOrEmpty(k)).ToArray())
+                              .Where(k => !string.IsNullOrEmpty(k))
+                              .ToArray();
+            var matches = from m in Merchant.GetAll(keywordsArray)
                           from q in m.GetQueues()
                           select new {
                               name = m.Name,

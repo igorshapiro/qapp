@@ -61,6 +61,7 @@ namespace qapp
         {
             using (var s = Store.OpenSession())
             {
+                if (s.Query<Merchant>().Any()) return;
                 for (int i = 0; i < 10; i++)
                 {
                     var queueId =  "queues/" + Guid.NewGuid().ToString();
