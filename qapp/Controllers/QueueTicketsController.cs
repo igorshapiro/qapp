@@ -8,7 +8,7 @@ namespace qapp.Controllers
     public class QueueTicketsController : Controller
     {
         [HttpPost]
-        public ActionResult Index(string merchantId, string queueId, string userId)
+        public ActionResult Index(string queueId, string userId, bool dummyArg1)
         {
             try
             {
@@ -17,14 +17,14 @@ namespace qapp.Controllers
                     session.Advanced.AllowNonAuthoritativeInformation = false;
                     session.Advanced.UseOptimisticConcurrency = true;
 
-                    var merchant = session.Load<Merchant>(merchantId);
-
                     var queue = session.Load<Queue>(queueId);
+                    var merchant = session.Load<Merchant>(queue.MerchantId);
+                    
                     queue.LastPosition++;
                     var ticket = new Ticket
                     {
                         UserId = userId,
-                        ProviderId = merchantId,
+                        ProviderId = queue.MerchantId,
                         QueueId = queueId,
                         MerchantName = merchant.Name,
                         Position = queue.LastPosition
