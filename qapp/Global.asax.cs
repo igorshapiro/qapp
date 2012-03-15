@@ -4,6 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Raven.Client;
+using Raven.Abstractions.Data;
+using Raven.Client.Document;
 
 namespace qapp
 {
@@ -12,6 +15,8 @@ namespace qapp
 
     public class MvcApplication : System.Web.HttpApplication
     {
+        public static IDocumentStore Store { get; private set; }
+
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
@@ -35,6 +40,16 @@ namespace qapp
 
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
+
+            var parser = ConnectionStringParser<RavenConnectionStringOptions>.FromConnectionStringName("RavenDB");
+            parser.Parse();
+
+            Store = new DocumentStore
+            {
+                ApiKey = parser.ConnectionStringOptions.ApiKey,
+                Url = parser.ConnectionStringOptions.Url
+            };
+            Store.Initialize();
         }
     }
 }
