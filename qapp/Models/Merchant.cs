@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Raven.Client.Linq;
+﻿using System.Linq;
 using Raven.Client;
+using Raven.Client.Linq;
 
 namespace qapp.Models
 {

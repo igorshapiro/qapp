@@ -30,17 +30,18 @@ namespace qapp.Controllers
             {
                 var queueId = "queues/" + Guid.NewGuid();
 
-                var merchant = new Merchant();
-                merchant.Name = name;
-                merchant.Longitude = longitude;
-                merchant.Latitude = latitude;
-                merchant.Address = address;
+                var merchant = new Merchant {
+                                                Name = name,
+                                                Longitude = longitude,
+                                                Latitude = latitude,
+                                                Address = address,
+                                                QueueIds = new[] {queueId}
+                                            };
+
 
                 session.Store(merchant);
 
-                var queue = new Queue();
-                queue.MerchantId = merchant.Id;
-                queue.LastPosition = 1;
+                var queue = new Queue {Id = queueId, MerchantId = merchant.Id, LastPosition = 1};
 
                 session.Store(queue);
 
