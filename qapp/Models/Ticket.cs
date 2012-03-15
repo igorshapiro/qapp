@@ -11,14 +11,15 @@ namespace qapp.Models
         public string UserId { get; set; }
         public DateTime OpenTimeUTC { get; set; }
         public DateTime? CloseTimeUTC { get; set; }
+        public DateTime? ProcessStartTimeUTC { get; set; }
         public string MerchantName { get; set; }
         public long Position { get; set; }
-        public long? TimeToServer
+        public long? TimeToServe
         {
             get
             {
-                if (!CloseTimeUTC.HasValue) return null;
-                return (long) CloseTimeUTC.Value.Subtract(OpenTimeUTC).TotalSeconds;
+                if (!ProcessStartTimeUTC.HasValue || !CloseTimeUTC.HasValue) return null;
+                return (long) CloseTimeUTC.Value.Subtract(ProcessStartTimeUTC.Value).TotalSeconds;
             }
         }
 
