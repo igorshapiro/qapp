@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Raven.Client.Linq;
+using Raven.Client;
 
 namespace qapp.Models
 {
@@ -31,16 +32,13 @@ namespace qapp.Models
             } 
         }
 
-        public static Merchant[] GetAll(string[] keywords)
+        public static Merchant[] GetAll(IDocumentSession session, string[] keywords)
         {
-            using (var session = MvcApplication.Store.OpenSession())
-            {
-                if (keywords == null || keywords.Length == 0)
+            if (keywords == null || keywords.Length == 0)
                     return session.Query<Merchant>().ToArray();
-                return session.Query<Merchant>()
-                    .Where(m => m.Keywords.Any(k => k.In(keywords)))
-                    .ToArray();
-            }
+            return session.Query<Merchant>()
+                .Where(m => m.Keywords.Any(k => k.In(keywords)))
+                .ToArray();
         }
 
         public Queue[] GetQueues()

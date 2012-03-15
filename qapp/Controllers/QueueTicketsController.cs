@@ -8,7 +8,7 @@ namespace qapp.Controllers
     public class QueueTicketsController : Controller
     {
         [HttpPost]
-        public ActionResult Index(string merchantId, string queueId, string userId, string queueTicketId, bool isProcessed)
+        public ActionResult Index(string merchantId, string queueId, string userId)
         {
             try
             {
@@ -21,11 +21,19 @@ namespace qapp.Controllers
 
                     var queue = session.Load<Queue>(queueId);
                     queue.LastPosition++;
-                    var ticket = new Ticket { UserId = userId, ProviderId = merchantId, QueueId = queueId, MerchantName = merchant.Name };
+                    var ticket = new Ticket
+                    {
+                        UserId = userId,
+                        ProviderId = merchantId,
+                        QueueId = queueId,
+                        MerchantName = merchant.Name,
+                        Position = queue.LastPosition
+                    };
                     session.Store(ticket);
                     session.SaveChanges();
 
-                    return Json(new { status = "ok", position = queue.LastPosition - queue.CurrentPosition, ticketId = ticket.Id });
+                    return Json(new { status = "ok", position = queue.LastPosition - queue.CurrentPosition, ticketId = ticket.Id,
+                    secondsLeft = (long) ((ticket.Position - queue.CurrentPosition) * queue.GetAverageProcessTime(session).TotalSeconds)});
                 }
             }
             catch (Exception)
@@ -53,7 +61,8 @@ namespace qapp.Controllers
                                  name = t.MerchantName,
                                  queueId = t.QueueId,
                                  queueTicketId = t.Id,
-                                 queuePosition = t.Position - q.CurrentPosition
+                                 queuePosition = t.Position - q.CurrentPosition,
+                                 secondsLeft = (long) (t.Position - q.CurrentPosition) * q.GetAverageProcessTime(session).TotalSeconds
                              };
 
                 return Json(result.ToArray(), JsonRequestBehavior.AllowGet);
@@ -70,6 +79,12 @@ namespace qapp.Controllers
 
                 var ticket = session.Load<Ticket>(queueTicketId);
                 ticket.CloseTimeUTC = DateTime.UtcNow;
+
+                var nextTicket = session.Query<Ticket>()
+                    .Where(t => t.QueueId == ticket.QueueId)
+                    .OrderBy(t => t.Position)
+                    .First();
+                nextTicket.ProcessStartTimeUTC = DateTime.UtcNow;
 
                 var queue = session.Load<Queue>(ticket.QueueId);
                 queue.CurrentPosition++;

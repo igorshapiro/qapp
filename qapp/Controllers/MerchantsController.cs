@@ -21,24 +21,29 @@ namespace qapp.Controllers
         /// <returns></returns>
         public ActionResult Index(double? longitude, double? latitude, string keywords)
         {
-            string[] keywordsArray = new string[]{};
-            if (keywords != null)
-                keywordsArray = keywords.Split(',')
-                              .Where(k => k != null)
-                              .Select(k => k.Trim())
-                              .Where(k => !string.IsNullOrEmpty(k))
-                              .ToArray();
-            var matches = from m in Merchant.GetAll(keywordsArray)
-                          from q in m.GetQueues()
-                          select new {
-                              name = m.Name,
-                              address = m.Address,
-                              merchantId = m.Id,
-                              queueId = q.Id,
-                              latitude = m.Latitude,
-                              longitude = m.Longitude
-                          };
-            return Json(matches.ToArray(), JsonRequestBehavior.AllowGet);
+            using (var session = MvcApplication.Store.OpenSession())
+            {
+                string[] keywordsArray = new string[] { };
+                if (keywords != null)
+                    keywordsArray = keywords.Split(',')
+                                  .Where(k => k != null)
+                                  .Select(k => k.Trim())
+                                  .Where(k => !string.IsNullOrEmpty(k))
+                                  .ToArray();
+                var matches = from m in Merchant.GetAll(session, keywordsArray)
+                              from q in m.GetQueues()
+                              select new
+                              {
+                                  name = m.Name,
+                                  address = m.Address,
+                                  merchantId = m.Id,
+                                  queueId = q.Id,
+                                  latitude = m.Latitude,
+                                  longitude = m.Longitude,
+                                  queueTime = (q.LastPosition - q.CurrentPosition) * q.GetAverageProcessTime(session).TotalSeconds
+                              };
+                return Json(matches.ToArray(), JsonRequestBehavior.AllowGet);
+            }
         }
 
     }
