@@ -20,20 +20,11 @@ namespace qapp.Models {
             var end = DateTime.UtcNow;
 
             var tickets = session.Query<Ticket>()
-                .Where(t => t.QueueId == Id && t.TimeToServe != null && t.CloseTimeUTC >= start && t.CloseTimeUTC < end);
+                .Where(t => t.QueueId == Id && t.TimeToServe != null && t.CloseTimeUTC >= start && t.CloseTimeUTC < end)
+                .ToArray();
+            if (!tickets.Any())
+                return TimeSpan.FromMinutes(15);
             return TimeSpan.FromSeconds((long)tickets.Average(t => t.TimeToServe.Value));
         }
-
-/*        public Ticket CreateTicket(string userId)
-        {
-            CurrentPosition++;
-            var ticket = new Ticket
-            {
-                UserId = userId,
-                ProviderId = MerchantId,
-                QueueId = Id
-            };
-            return ticket;
-        }*/
     }
 }
