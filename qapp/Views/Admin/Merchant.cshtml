@@ -1,0 +1,22 @@
+﻿@model qapp.Models.Merchant
+@{
+    ViewBag.Title = "Index";
+}
+<form method="post">
+<label>
+    Name:
+</label>
+@Html.TextBoxFor(m => m.Name)
+<br />
+<label>
+    Address:</label>
+@Html.TextBoxFor(m => m.Address);
+<br />
+<label>
+    Latitude:</label>
+@Html.TextBoxFor(m => m.Latitude);
+<br />
+<label>
+    Longitude:</label>
+@Html.TextBoxFor(m => m.Longitude); <input type="submit" value="submit" />
+</form>

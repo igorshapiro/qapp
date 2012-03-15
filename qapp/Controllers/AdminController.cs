@@ -29,7 +29,6 @@ namespace qapp.Controllers
             using (var session = MvcApplication.Store.OpenSession())
             {
                 var queueId = "queues/" + Guid.NewGuid();
-
                 var merchant = new Merchant {
                                                 Name = name,
                                                 Longitude = longitude,
@@ -47,7 +46,7 @@ namespace qapp.Controllers
 
                 session.SaveChanges();
             }
-            return View();
+            return View("Ok");
         }
 
         [HttpGet]
