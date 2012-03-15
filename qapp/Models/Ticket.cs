@@ -11,6 +11,16 @@ namespace qapp.Models
         public string UserId { get; set; }
         public DateTime OpenTimeUTC { get; set; }
         public DateTime? CloseTimeUTC { get; set; }
+        public string MerchantName { get; set; }
+        public long Position { get; set; }
+        public long? TimeToServer
+        {
+            get
+            {
+                if (!CloseTimeUTC.HasValue) return null;
+                return (long) CloseTimeUTC.Value.Subtract(OpenTimeUTC).TotalSeconds;
+            }
+        }
 
         public static Ticket GetTicket(string providerId, string queueId, string userId) {
             using (var session = MvcApplication.Store.OpenSession()) {
