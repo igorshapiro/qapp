@@ -35,12 +35,14 @@ namespace qapp.Controllers
                 merchant.Longitude = longitude;
                 merchant.Latitude = latitude;
                 merchant.Address = address;
+                merchant.QueueIds = new[] { queueId };
 
                 session.Store(merchant);
 
                 var queue = new Queue();
                 queue.MerchantId = merchant.Id;
                 queue.LastPosition = 1;
+                queue.Id = queueId;
 
                 session.Store(queue);
 
