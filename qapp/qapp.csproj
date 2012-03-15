@@ -14,7 +14,6 @@
     <AssemblyName>qapp</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>false</UseIISExpress>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -81,14 +80,13 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\MerchantsController.cs" />
     <Compile Include="Controllers\QueueTicketsController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Queue.cs" />
-    <Compile Include="Models\Ticket.cs" />
     <Compile Include="Models\Merchant.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
