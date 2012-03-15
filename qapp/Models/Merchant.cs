@@ -42,22 +42,8 @@ namespace qapp.Models
         }
     }
 
-    public class Queue
-    {
-        public string MerchantId { get; set; }
-        public string Id { get; set; }
-    }
-
     public class User
     {
         public string Id { get; set; }
-    }
-
-    public class Ticket
-    {
-        public string Id { get; set; }
-        public string QueueId { get; set; }
-        public string ProviderId { get; set; }
-        public string UserId { get; set; }
     }
 }
