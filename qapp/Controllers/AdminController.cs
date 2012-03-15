@@ -46,7 +46,7 @@ namespace qapp.Controllers
 
                 session.SaveChanges();
             }
-            return View();
+            return View("Ok");
         }
 
         [HttpGet]
