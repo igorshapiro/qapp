@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>
+        </title>
+        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.css" />
+        <style>
+            /* App custom styles */
+        </style>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js">
+        </script>
+        <script src="http://code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.js">
+        </script>
+        <script src="http://qapp.apphb.com/client/qappsclient.js">
+        </script>
+        
+        
+    </head>
+    <body>
+        <div data-role="page" id="page1">
+            <div data-role="content">
+                <div data-role="fieldcontain">
+                    <label for="selectmenu1">
+                        Category:
+                    </label>
+                    <select name="selectmenu1" id="selectmenu1" data-theme="c">
+                        <option value="0">
+                            Favorites
+                        </option>
+                        <option value="1">
+                            Nearby
+                        </option>
+                        <option value="2">
+                            Nail polish saloons
+                        </option>
+                        <option value="3">
+                            Ministrial Offices
+                        </option>
+                        <option value="3">
+                            Banks
+                        </option>
+                    </select>
+                </div>
+            </div>
+            
+            <ul data-role="listview" data-theme="g">
+            	<li><a>Queue 1</a></li>
+            	<li><a>Queue 2</a></li>
+            	<li><a>Queue 3</a></li>
+            	<li><a>Queue 4</a></li>
+            	<li><a>Queue 5</a></li>
+            </ul>
+            
+            <script type="text/javascript">
+      		$(document).ready(function() {
+      			getCategories();
+      		});
+      		
+      	
+        </script>
+        </div>
+        
+        
+    </body>
+</html>
