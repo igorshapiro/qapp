@@ -40,7 +40,7 @@ namespace qapp.Controllers
                                   queueId = q.Id,
                                   latitude = m.Latitude,
                                   longitude = m.Longitude,
-                                  queueTime = (q.LastPosition - q.CurrentPosition) * q.GetAverageProcessTime(session).TotalSeconds
+                                  averageTime = q.GetAverageProcessTime(session).TotalSeconds
                               };
                 return Json(matches.ToArray(), JsonRequestBehavior.AllowGet);
             }

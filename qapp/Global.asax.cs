@@ -57,7 +57,7 @@ namespace qapp
 
         static Random s_random = new Random();
 
-        private void InitDB()
+        public void InitDB()
         {
             using (var s = Store.OpenSession())
             {

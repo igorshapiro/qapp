@@ -3,16 +3,36 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "qapp", "qapp\qapp.csproj", "{1A12754E-A25A-4D3B-A61A-D85BAD04F293}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{80AC5C7D-3113-4BF1-BC70-E8955E4A3A1C}"
+	ProjectSection(SolutionItems) = preProject
+		Local.testsettings = Local.testsettings
+		qapp.vsmdi = qapp.vsmdi
+		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
+	EndProjectSection
+EndProject
 Global
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = qapp.vsmdi
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|Mixed Platforms = Debug|Mixed Platforms
+		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
+		Release|Mixed Platforms = Release|Mixed Platforms
+		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{1A12754E-A25A-4D3B-A61A-D85BAD04F293}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1A12754E-A25A-4D3B-A61A-D85BAD04F293}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A12754E-A25A-4D3B-A61A-D85BAD04F293}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{1A12754E-A25A-4D3B-A61A-D85BAD04F293}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{1A12754E-A25A-4D3B-A61A-D85BAD04F293}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{1A12754E-A25A-4D3B-A61A-D85BAD04F293}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1A12754E-A25A-4D3B-A61A-D85BAD04F293}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A12754E-A25A-4D3B-A61A-D85BAD04F293}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{1A12754E-A25A-4D3B-A61A-D85BAD04F293}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{1A12754E-A25A-4D3B-A61A-D85BAD04F293}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
