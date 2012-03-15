@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using qapp.Models;
 
 namespace qapp.Controllers
 {
@@ -20,7 +21,20 @@ namespace qapp.Controllers
         /// <returns></returns>
         public ActionResult Index(double? longitude, double? latitude, string keywords)
         {
-            return View();
+            var matches = from m in Merchant.GetAll(keywords.Split(',')
+                              .Where(k => k != null)
+                              .Select(k => k.Trim())
+                              .Where(k => !string.IsNullOrEmpty(k)).ToArray())
+                          from q in m.GetQueues()
+                          select new {
+                              name = m.Name,
+                              address = m.Address,
+                              merchantId = m.Id,
+                              queueId = q.Id,
+                              latitude = m.Latitude,
+                              longitude = m.Longitude
+                          };
+            return Json(matches.ToArray(), JsonRequestBehavior.AllowGet);
         }
 
     }
