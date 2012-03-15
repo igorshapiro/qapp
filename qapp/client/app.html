@@ -9,55 +9,44 @@
         <style>
             /* App custom styles */
         </style>
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js">
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js">
         </script>
         <script src="http://code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.js">
         </script>
-        <script src="http://qapp.apphb.com/client/qappsclient.js">
+        <script src="qappsclient.js">
         </script>
-        
         
     </head>
     <body>
-        <div data-role="page" id="page1">
+        <div data-role="page" id="mainPage">
             <div data-role="content">
                 <div data-role="fieldcontain">
-                    <label for="selectmenu1">
+                    <label for="selectCategory">
                         Category:
                     </label>
-                    <select name="selectmenu1" id="selectmenu1" data-theme="c">
+                    <select name="selectCategory" id="selectCategory" data-theme="c">
                         <option value="0">
                             Favorites
                         </option>
                         <option value="1">
                             Nearby
                         </option>
-                        <option value="2">
-                            Nail polish saloons
-                        </option>
-                        <option value="3">
-                            Ministrial Offices
-                        </option>
-                        <option value="3">
-                            Banks
-                        </option>
                     </select>
                 </div>
+                 <ul data-role="listview" id="placesList" data-theme="g">
+            	</ul>
             </div>
             
-            <ul data-role="listview" data-theme="g">
-            	<li><a>Queue 1</a></li>
-            	<li><a>Queue 2</a></li>
-            	<li><a>Queue 3</a></li>
-            	<li><a>Queue 4</a></li>
-            	<li><a>Queue 5</a></li>
-            </ul>
+            
+            
+           
             
             <script type="text/javascript">
       		$(document).ready(function() {
-      			getCategories();
+      			setCategories();
       		});
       		
+      		$('selectCategory option').click(setCategories());
       	
         </script>
         </div>
