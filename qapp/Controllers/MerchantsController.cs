@@ -11,7 +11,14 @@ namespace qapp.Controllers
         //
         // GET: /Merchants/
 
-        public ActionResult Index()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="longitude">User location longitude (optional)</param>
+        /// <param name="latitude">User location latitude (optional)</param>
+        /// <param name="keywords">Comma-separated keywords</param>
+        /// <returns></returns>
+        public ActionResult Index(double? longitude, double? latitude, string keywords)
         {
             return View();
         }
