@@ -24,7 +24,7 @@
                     <label for="selectCategory">
                         Category:
                     </label>
-                    <select name="selectCategory" id="selectCategory" data-theme="c">
+                    <select name="selectCategory" id="selectCategory" data-theme="c" onchange="setPlaces()">
                         <option value="0">
                             Favorites
                         </option>
@@ -46,7 +46,7 @@
       			setCategories();
       		});
       		
-      		$('selectCategory option').click(setCategories());
+      		 
       	
         </script>
         </div>

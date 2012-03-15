@@ -40,6 +40,6 @@ function setCategories(){
 
 function setPlaces(){
 	$.get("http://qapp.apphb.com/merchants", function(data){
-    	initCategories(data);
+    	initPlaces(data);
     	});
 }
