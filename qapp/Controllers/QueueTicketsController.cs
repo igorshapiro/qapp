@@ -1,23 +1,12 @@
 ﻿using System.Web.Mvc;
 using qapp.Models;
 using System;
+using System.Linq;
 
 namespace qapp.Controllers
 {
     public class QueueTicketsController : Controller
     {
-        /// <summary>
-        /// Returns the stastus ("ok", "error"), position in queue, estimatedtime to be first in line, ticketId 
-        /// </summary>
-        /// <param name="providerId"></param>
-        /// <param name="queueId"></param>
-        /// <param name="userId"></param>
-        /// <returns></returns>
-        public ActionResult GetTicket(string providerId, string queueId, string userId) {
-            Ticket ticket = Ticket.GetTicket(providerId, queueId, userId);
-            return ticket == null ? Json(new {status = "error"}) : Json(new { status = "OK", position = 1, estimatedTime = 4235235, ticketId = ticket.Id });
-        }
-
         [HttpPost]
         public ActionResult Index(string merchantId, string queueId, string userId, string queueTicketId, bool isProcessed)
         {
@@ -28,9 +17,11 @@ namespace qapp.Controllers
                     session.Advanced.AllowNonAuthoritativeInformation = false;
                     session.Advanced.UseOptimisticConcurrency = true;
 
+                    var merchant = session.Load<Merchant>(merchantId);
+
                     var queue = session.Load<Queue>(queueId);
                     queue.LastPosition++;
-                    var ticket = new Ticket { UserId = userId, ProviderId = merchantId, QueueId = queueId };
+                    var ticket = new Ticket { UserId = userId, ProviderId = merchantId, QueueId = queueId, MerchantName = merchant.Name };
                     session.Store(ticket);
                     session.SaveChanges();
 
@@ -40,6 +31,32 @@ namespace qapp.Controllers
             catch (Exception)
             {
                 return Json(new {status = "failed"});
+            }
+        }
+
+        [HttpGet]
+        public ActionResult Index(string userId)
+        {
+            using (var session = MvcApplication.Store.OpenSession())
+            {
+                session.Advanced.AllowNonAuthoritativeInformation = true;
+
+                var tickets =
+                    session.Query<Ticket>()
+                        .Where(t => t.UserId == userId && t.CloseTimeUTC == null)
+                        .ToArray();
+
+                var result = from t in tickets
+                             let q = session.Load<Queue>(t.QueueId)
+                             select new
+                             {
+                                 name = t.MerchantName,
+                                 queueId = t.QueueId,
+                                 queueTicketId = t.Id,
+                                 queuePosition = t.Position - q.CurrentPosition
+                             };
+
+                return Json(result.ToArray(), JsonRequestBehavior.AllowGet);
             }
         }
 
@@ -64,7 +81,7 @@ namespace qapp.Controllers
         }
 
         [HttpDelete]
-        public ActionResult Index(string queueTicketId)
+        public ActionResult Index(string queueTicketId, string dummyArg1)
         {
             using (var session = MvcApplication.Store.OpenSession())
             {
@@ -73,6 +90,8 @@ namespace qapp.Controllers
 
                 var ticket = session.Load<Ticket>(queueTicketId);
                 ticket.CloseTimeUTC = DateTime.UtcNow;
+
+                session.SaveChanges();
 
                 return new EmptyResult();
             }
