@@ -46,7 +46,7 @@ function setPlaces(){
 
 function getQDetails(qID){
 	//$.get/post
-	var retVal = eval('({name:"Laka Dizingoff", nextnumber:"3", nextticket:"2", waittime:"32"})');
+	var retVal = eval('({name:"Laka Dizingoff", nextnumber:"2", nextticket:"3", waittime:"1"})');
 	return retVal;
 
 	
