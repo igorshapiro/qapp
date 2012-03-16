@@ -46,7 +46,7 @@ function setPlaces(){
 
 function getQDetails(qID){
 	//$.get/post
-	var retVal = eval('({name:"Laka Dizingoff", nextnumber:"3", nextticket:"12", waittime:"32"})');
+	var retVal = eval('({name:"Laka Dizingoff", nextnumber:"3", nextticket:"2", waittime:"32"})');
 	return retVal;
 
 	
@@ -93,7 +93,7 @@ function gotTicket(qID){
 
 
 function updateTime(){
-	console.log("started");
+//	console.log("started");
 	qtime--;
 	if(qtime == 0){
 		window.clearInterval(interval);
