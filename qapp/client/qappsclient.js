@@ -7,7 +7,7 @@ function addCategory(category){
 }
 
 function addPlace(place){
-	$("#placesList").append("<li data-theme='c'><a>" + place.name + "</a></li>");
+	$("#placesList").append("<li data-theme='c'><a onclick='toggleGetTicketScreen(" + place.qid + ")'>" + place.name + "</a></li>");
 	$("#placesList").listview("refresh");
 	
 }
@@ -23,9 +23,8 @@ function initCategories(categories){
 
 function initPlaces(jsonStr){
 	if (jsonStr==null){
-		jsonStr = '[{name: "place1"}, {name: "place2"}, {name: "place3"}]';
+		jsonStr = '[{name: "place1", qid:"1"}, {name: "place2", qid:"2"}, {name: "place3", qid:"3"}]';
 	}
-	
 	places = eval('(' + jsonStr + ')');
 	
 	for (var i in places){
@@ -33,7 +32,7 @@ function initPlaces(jsonStr){
 	}
 }
 
-function setCategories(){  
+function setCategories(){
 	$.get("http://qapp.apphb.com/categories", function(data){
         	initCategories(data);
         	});
@@ -45,14 +44,33 @@ function setPlaces(){
     	});
 }
 
-function toggleGetTicketScreen(placeName){
-	$("#mainPage").fadeOut();
+function getQDetails(qID){
+	//$.get/post
+	var retVal = eval('({name:"laka", nextnumber:"3", nextticket:"12", waittime:"32"})');
+	return retVal;
+
+	
+	
+}
+
+function toggleGetTicketScreen(qID){
+	//alert(placeName);
+	qObj = getQDetails(qID);
+	$("#mainPage").hide();
+	$('#placeName').text(qObj.name);
+	$('#nextNumber').text(qObj.nextnumber);
+	$('#nextTicket').text(qObj.nextticket);
+	$('#avgWaitTime').text(qObj.waittime);
+	
 	$("#getticket").fadeIn();
 	
 //	alert(placeName);
 	
 }
 
-function gotTicket(){
+function gotTicket(qID){
+	$("#getticket").hide();
+	alert("gotTicketForLine " + qID);
+	$("#mainPage").fadeIn();
 	Android.startWebPuller();
 }

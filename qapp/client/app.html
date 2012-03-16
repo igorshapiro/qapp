@@ -21,7 +21,6 @@
         <div data-role="page" >
             <div data-role="content" id="mainPage">
                 <div data-role="fieldcontain">
-                <a href="getticket.html" data-rel="dialog"> dialog</a>
                     <label for="selectCategory">
                         Category:
                     </label>
@@ -36,14 +35,21 @@
                 </div>
                 
                  <ul data-role="listview" id="placesList" data-theme="a">
-                 <li><a onclick="toggleGetTicketScreen('Laka')">ddas</a></li>
+                 <li><a onclick="toggleGetTicketScreen(0)">ddas</a></li>
             	</ul>
             </div>
             
             <div id="getticket">
             <h1>Get ticket</h1>
-            <a id="placeName"></a>
-            <a onclick="gotTicket()">get ticket	</a>
+            <a id="placeName"></a><br />
+            <a>Current nember in screen: </a>
+            <a id="nextNumber"></a><br />
+            <a>Next Ticket: </a>
+            <a id="nextTicket"></a><br />
+            <a>Avarage Waiting time: </a>
+            <a id="avgWaitTime"></a>
+            <a> min</a><br />
+            <a onclick="gotTicket(1)" data-role="button">get ticket	</a>
             
             </div>
             
