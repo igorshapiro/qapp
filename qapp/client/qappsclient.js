@@ -23,7 +23,7 @@ function initCategories(categories){
 
 function initPlaces(jsonStr){
 	if (jsonStr==null){
-		jsonStr = '[{name: "place1", qid:"1"}, {name: "place2", qid:"2"}, {name: "place3", qid:"3"}]';
+		jsonStr = '[{name: "Laka Dizingoff", qid:"1"}, {name: "Laka Even Gvirol", qid:"2"}, {name: "Laka Jerusalem", qid:"3"}]';
 	}
 	places = eval('(' + jsonStr + ')');
 	
@@ -46,7 +46,7 @@ function setPlaces(){
 
 function getQDetails(qID){
 	//$.get/post
-	var retVal = eval('({name:"laka", nextnumber:"3", nextticket:"12", waittime:"32"})');
+	var retVal = eval('({name:"Laka Dizingoff", nextnumber:"3", nextticket:"12", waittime:"32"})');
 	return retVal;
 
 	
@@ -71,19 +71,37 @@ function toggleGetTicketScreen(qID){
 
 function getTicketFromServer(){
 	$.post("http://qapp.apphb.com/queuetickets", { userid: "123123",
-		queueid: "queues/125e809c-3c1b-4be5-8cd4-6e5c5cd1093a",
-		providerid:"merchants/29b5f252-c8e2-4db6-848e-c48e2caffa94"},
+		queueid: "queues/125e809c-3c1b-4be5-8cd4-6e5c5cd1093a"},
 			   function(data) {
-			     alert("Recived: " + data);
+			 //    alert("Recived: " + data);
 			   });
 }
 
+var qtime = 30;
+var interval;
 function gotTicket(qID){
 	$("#getticket").hide();
-	alert("gotTicketForLine " + qID);
-	$("#mainPage").fadeIn();
+//	alert("gotTicketForLine " + qID);
+	$("#dialogDiv").fadeIn();
+//	getTicketFromServer();
+	//Android.startWebPuller();
+	//setTimeout(a, arg2);
+	updateTime();
+	interval = window.setInterval("updateTime()", 1000);
 	
-	getTicketFromServer();
-	Android.startWebPuller();
+}
+
+
+function updateTime(){
+	console.log("started");
+	qtime--;
+	if(qtime == 0){
+		window.clearInterval(interval);
+		$("#lblNext").css("display", "block");
+	}
+	var timeStr = "0:" + qtime.toString(); 
+	$("#dtime").text(timeStr)
+	
+	
 }
 

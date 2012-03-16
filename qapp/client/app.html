@@ -9,12 +9,9 @@
         <style>
             /* App custom styles */
         </style>
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js">
-        </script>
-        <script src="http://code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.js">
-        </script>
-        <script src="qappsclient.js">
-        </script>
+        
+        
+  		
         
     </head>
     <body>
@@ -35,7 +32,6 @@
                 </div>
                 
                  <ul data-role="listview" id="placesList" data-theme="a">
-                 <li><a onclick="toggleGetTicketScreen(0)">ddas</a></li>
             	</ul>
             </div>
             
@@ -53,20 +49,37 @@
             
             </div>
             
+            <div id="dialogDiv">
+            <h1>Laka Dizingoff</h1>
+            <a>Your Number: </a>
+            <a id="dNumber">2</a><br />
+            <a>Estimated time: </a>
+            <a id="dtime"></a><br />
+            <label id="lblNext" style="display: none;">You're Next!!!</label>
+            </div>
            
-            
-            <script type="text/javascript">
-      		$(document).ready(function() {
-      		//	setCategories();
-      		$("#getticket").hide();
-      		initCategories();
-      		});
-      		
-      		 
-      	
-        </script>
         </div>
         
         
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js">
+        </script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+  
+        
+        <script src="http://code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.js">
+        </script>
+        <script src="qappsclient.js">
+        </script>
+        <script type="text/javascript">
+      		$(document).ready(function() {
+      		//	setCategories();
+      		$("#getticket").hide();
+      		$("#dialogDiv").hide();
+      		
+
+      		initCategories();
+      	//	$("#dialog").dialog();
+      		});
+        </script>
     </body>
 </html>
