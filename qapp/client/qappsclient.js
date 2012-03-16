@@ -68,9 +68,22 @@ function toggleGetTicketScreen(qID){
 	
 }
 
+
+function getTicketFromServer(){
+	$.post("http://qapp.apphb.com/categories", { userid: "123123",
+		queueid: "queues/125e809c-3c1b-4be5-8cd4-6e5c5cd1093a",
+		providerid:"merchants/29b5f252-c8e2-4db6-848e-c48e2caffa94"},
+			   function(data) {
+			     alert("Recived: " + data);
+			   });
+}
+
 function gotTicket(qID){
 	$("#getticket").hide();
 	alert("gotTicketForLine " + qID);
 	$("#mainPage").fadeIn();
+	
+	getTicketFromServer();
 	Android.startWebPuller();
 }
+
